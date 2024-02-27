@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
+using RepositoryServices;
+
 using Utailitze;
 
 
@@ -33,7 +35,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddTransient(typeof(IPaginationHelper<>), typeof(PaginationHelper<>));
 
-//builder.Services.AddTransient<un>();
+builder.Services.AddTransient<UnitOfWork>();
 
 //builder.Services.AddScoped<TriningEmpoyeeServsess_Api>();
 
