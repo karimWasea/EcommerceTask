@@ -1,15 +1,15 @@
-﻿//using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
-//using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 
-//namespace Utailitzes
-//{
-//    public class EmailSender : IEmailSender
-//    {
-//        public Task SendEmailAsync(string email, string subject, string htmlMessage)
-//        {
-//            return Task.CompletedTask;
-//        }
-//    }
-//}
+namespace Utailitzes
+{
+    //public class EmailSender : IEmailSender
+    //{
+    //    public Task SendEmailAsync(string email, string subject, string htmlMessage)
+    //    {
+    //        return Task.CompletedTask;
+    //    }
+    //}
+}

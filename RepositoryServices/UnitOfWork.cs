@@ -1,9 +1,11 @@
 ﻿using DataAccessLayer;
 
+using IRepositories;
+
 
 namespace RepositoryServices
 {
-    public class UnitOfWork : IRepositories.IUnitOfWork
+    public class UnitOfWork :  IUnitOfWork
     {
 
         public readonly ApplicationDbContext _context;
@@ -23,7 +25,7 @@ namespace RepositoryServices
         #region Implement the Dispose method to release resources
         private bool disposed = false;
 
-
+        public Icategory Icategory { get; }
 
         protected virtual void Dispose(bool disposing)
         {

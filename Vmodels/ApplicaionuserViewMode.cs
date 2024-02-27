@@ -2,19 +2,17 @@
 {
     namespace HR.ViewModel
     {
-        using Microsoft.AspNetCore.Http;
-        using Microsoft.AspNetCore.Mvc.Rendering;
+  
 
         using System;
         using System.ComponentModel.DataAnnotations;
 
-        using Utailitze;
-
+ 
         public class ApplicaionuserViewMode
         {
 
-            public IEnumerable<SelectListItem> listGender { get; set; } = Enumerable.Empty<SelectListItem>();
-            public IEnumerable<SelectListItem> alldept { get; set; } = Enumerable.Empty<SelectListItem>();
+            //public IEnumerable<SelectListItem> listGender { get; set; } = Enumerable.Empty<SelectListItem>();
+            //public IEnumerable<SelectListItem> alldept { get; set; } = Enumerable.Empty<SelectListItem>();
 
             public string Id { get; set; }
             [Required(ErrorMessage = "is requred")]
@@ -32,12 +30,12 @@
             [Required(ErrorMessage = "is requred")]
 
             public string? Adress { get; set; }
-            [ValidateImage(ErrorMessage = "Please upload a valid image (JPEG or PNG) and ensure it is less than 5MB.")]
+            //[ValidateImage(ErrorMessage = "Please upload a valid image (JPEG or PNG) and ensure it is less than 5MB.")]
 
-            public IFormFile ContructUrl { get; set; }
-            [ValidateImage(ErrorMessage = "Please upload a valid image (JPEG or PNG) and ensure it is less than 5MB.")]
+            //public IFormFile ContructUrl { get; set; }
+            //[ValidateImage(ErrorMessage = "Please upload a valid image (JPEG or PNG) and ensure it is less than 5MB.")]
 
-            public IFormFile ImgUrl { get; set; }
+            //public IFormFile ImgUrl { get; set; }
 
 
             public string ContructPath { get; set; } =

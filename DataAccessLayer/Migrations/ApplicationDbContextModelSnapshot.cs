@@ -110,7 +110,12 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("ParentCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentCategoryId");
 
                     b.ToTable("Categories");
                 });
@@ -187,6 +192,27 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("DataAccessLayer.ProductCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductCategory");
+                });
+
             modelBuilder.Entity("DataAccessLayer.ProductPackage", b =>
                 {
                     b.Property<Guid>("Id")
@@ -206,47 +232,6 @@ namespace DataAccessLayer.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductPackages");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.ProductSubcategory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SubcategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("SubcategoryId");
-
-                    b.ToTable("ProductSubcategories");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Subcategory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Subcategories");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -329,12 +314,10 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -371,12 +354,10 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -386,6 +367,15 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("DataAccessLayer.Category", b =>
+                {
+                    b.HasOne("DataAccessLayer.Category", "ParentCategory")
+                        .WithMany("Subcategories")
+                        .HasForeignKey("ParentCategoryId");
+
+                    b.Navigation("ParentCategory");
+                });
+
             modelBuilder.Entity("DataAccessLayer.Image", b =>
                 {
                     b.HasOne("DataAccessLayer.Product", "Product")
@@ -393,6 +383,25 @@ namespace DataAccessLayer.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.ProductCategory", b =>
+                {
+                    b.HasOne("DataAccessLayer.Category", "Category")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataAccessLayer.Product", "Product")
+                        .WithMany("ProductCategory")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("Product");
                 });
@@ -414,36 +423,6 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Package");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.ProductSubcategory", b =>
-                {
-                    b.HasOne("DataAccessLayer.Product", "Product")
-                        .WithMany("ProductSubcategories")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Subcategory", "Subcategory")
-                        .WithMany()
-                        .HasForeignKey("SubcategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Subcategory");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Subcategory", b =>
-                {
-                    b.HasOne("DataAccessLayer.Category", "Category")
-                        .WithMany("Subcategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -499,6 +478,8 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("DataAccessLayer.Category", b =>
                 {
+                    b.Navigation("ProductCategories");
+
                     b.Navigation("Subcategories");
                 });
 
@@ -511,9 +492,9 @@ namespace DataAccessLayer.Migrations
                 {
                     b.Navigation("Images");
 
-                    b.Navigation("ProductPackages");
+                    b.Navigation("ProductCategory");
 
-                    b.Navigation("ProductSubcategories");
+                    b.Navigation("ProductPackages");
                 });
 #pragma warning restore 612, 618
         }

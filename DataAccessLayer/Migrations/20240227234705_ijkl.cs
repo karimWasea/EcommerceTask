@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccessLayer.Migrations
 {
-    public partial class INTTI : Migration
+    public partial class ijkl : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,11 +57,17 @@ namespace DataAccessLayer.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Categories_Categories_ParentCategoryId",
+                        column: x => x.ParentCategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -86,7 +92,8 @@ namespace DataAccessLayer.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ISBN = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false)
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    SKU = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,8 +146,8 @@ namespace DataAccessLayer.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -184,8 +191,8 @@ namespace DataAccessLayer.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -195,25 +202,6 @@ namespace DataAccessLayer.Migrations
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Subcategories",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Subcategories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Subcategories_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -231,6 +219,31 @@ namespace DataAccessLayer.Migrations
                     table.PrimaryKey("PK_Images", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Images_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductCategory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductCategory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductCategory_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductCategory_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -258,31 +271,6 @@ namespace DataAccessLayer.Migrations
                         name: "FK_ProductPackages_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductSubcategories",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SubcategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductSubcategories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductSubcategories_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductSubcategories_Subcategories_SubcategoryId",
-                        column: x => x.SubcategoryId,
-                        principalTable: "Subcategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -327,8 +315,23 @@ namespace DataAccessLayer.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_ParentCategoryId",
+                table: "Categories",
+                column: "ParentCategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Images_ProductId",
                 table: "Images",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductCategory_CategoryId",
+                table: "ProductCategory",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductCategory_ProductId",
+                table: "ProductCategory",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -340,21 +343,6 @@ namespace DataAccessLayer.Migrations
                 name: "IX_ProductPackages_ProductId",
                 table: "ProductPackages",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductSubcategories_ProductId",
-                table: "ProductSubcategories",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductSubcategories_SubcategoryId",
-                table: "ProductSubcategories",
-                column: "SubcategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Subcategories_CategoryId",
-                table: "Subcategories",
-                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -378,10 +366,10 @@ namespace DataAccessLayer.Migrations
                 name: "Images");
 
             migrationBuilder.DropTable(
-                name: "ProductPackages");
+                name: "ProductCategory");
 
             migrationBuilder.DropTable(
-                name: "ProductSubcategories");
+                name: "ProductPackages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -390,16 +378,13 @@ namespace DataAccessLayer.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
                 name: "Packages");
 
             migrationBuilder.DropTable(
                 name: "Products");
-
-            migrationBuilder.DropTable(
-                name: "Subcategories");
-
-            migrationBuilder.DropTable(
-                name: "Categories");
         }
     }
 }

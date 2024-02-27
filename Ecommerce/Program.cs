@@ -17,8 +17,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
 
@@ -33,7 +33,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddTransient(typeof(IPaginationHelper<>), typeof(PaginationHelper<>));
 
-builder.Services.AddTransient<IUnitOfWork>();
+//builder.Services.AddTransient<un>();
 
 //builder.Services.AddScoped<TriningEmpoyeeServsess_Api>();
 

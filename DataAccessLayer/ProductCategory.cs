@@ -2,7 +2,7 @@
 
 namespace DataAccessLayer
 {
-    public class ProductSubcategory : BaseModel
+    public class ProductCategory : BaseModel
     {
 
 
@@ -10,8 +10,8 @@ namespace DataAccessLayer
         public Guid ProductId { get; set; }
         public virtual Product Product { get; set; }
 
-        [ForeignKey("Subcategory")]
-        public Guid SubcategoryId { get; set; }
-        public virtual Subcategory Subcategory { get; set; }
+        [ForeignKey("Category")]
+        public Guid CategoryId { get; set; }
+        public virtual Category  Category { get; set; }
     }
 }
