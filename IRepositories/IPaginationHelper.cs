@@ -1,6 +1,7 @@
-﻿using PagedList;
+﻿
+using PagedList;
 
-namespace IRepository
+namespace IRepositories
 {
     public interface IPaginationHelper<T>
     {

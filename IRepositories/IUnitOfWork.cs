@@ -1,4 +1,4 @@
-﻿namespace IRepository
+﻿namespace IRepositories
 {
     public interface IUnitOfWork : IDisposable
 

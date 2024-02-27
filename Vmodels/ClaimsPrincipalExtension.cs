@@ -2,7 +2,7 @@
 
 
 using System.Security.Claims;
-namespace ViewModels
+namespace Vmodels
 {
 
     public static class ClaimsPrincipalExtension

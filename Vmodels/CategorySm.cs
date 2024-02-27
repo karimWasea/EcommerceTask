@@ -1,6 +1,6 @@
-﻿namespace ViewModels
+﻿namespace Vmodels
 {
-    public class CategoryViewModel : BaseViewModel
+    public class CategorySm : BaseSm
     {
 
         public string Name { get; set; } = string.Empty;

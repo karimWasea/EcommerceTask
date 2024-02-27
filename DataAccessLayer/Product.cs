@@ -15,6 +15,7 @@
 
         public double Price { get; set; }
 
+        public string SKU { get;   set; } = string.Empty;
 
 
 

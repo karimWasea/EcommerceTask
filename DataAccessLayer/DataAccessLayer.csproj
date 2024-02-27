@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IRepository\IRepository.csproj" />
     <ProjectReference Include="..\Utailitze\Utailitze.csproj" />
   </ItemGroup>
 

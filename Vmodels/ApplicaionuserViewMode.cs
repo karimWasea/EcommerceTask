@@ -1,4 +1,4 @@
-﻿namespace ViewModels
+﻿namespace Vmodels
 {
     namespace HR.ViewModel
     {

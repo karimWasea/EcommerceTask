@@ -1,10 +1,9 @@
 ﻿using DataAccessLayer;
 
-using IRepository;
 
 namespace RepositoryServices
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IRepositories.IUnitOfWork
     {
 
         public readonly ApplicationDbContext _context;
