@@ -1,6 +1,6 @@
 ﻿namespace IRepositories
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity>    where TEntity : class
     {
        TEntity GetByIdAsync(int id);
         int AddAsync(TEntity entity);

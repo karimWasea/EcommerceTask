@@ -36,6 +36,8 @@
   <ItemGroup>
     <ProjectReference Include="..\AutoMapperServess\AutoMapperServess.csproj" />
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
+    <ProjectReference Include="..\IRepositories\IRepositories.csproj" />
+    <ProjectReference Include="..\Utailitzes\Utailitzes.csproj" />
   </ItemGroup>
 
 </Project>

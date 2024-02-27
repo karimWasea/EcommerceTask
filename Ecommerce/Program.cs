@@ -2,8 +2,13 @@ using AutoMapperServess;
 
 using DataAccessLayer;
 
+using IRepositories;
+
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+
+using Utailitze;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +31,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddAutoMapper(typeof(Program));
-//builder.Services.AddTransient<Imgoperation>();
+builder.Services.AddTransient(typeof(IPaginationHelper<>), typeof(PaginationHelper<>));
+
+builder.Services.AddTransient<IUnitOfWork>();
 
 //builder.Services.AddScoped<TriningEmpoyeeServsess_Api>();
 
@@ -58,8 +65,7 @@ app.UseRouting();
 app.MapRazorPages();
 
 app.UseHttpsRedirection();
-app.UseAuthentication(); ;
-app.UseAuthorization();
+ app.UseAuthorization();
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",

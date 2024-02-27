@@ -3,7 +3,7 @@
     public interface IUnitOfWork : IDisposable
 
     {
-        //IWorkScheduleCurentWeekDay workScheduleCurentWeekDay { get; }
+        Icategory  Icategory { get; }
 
     }
 }
