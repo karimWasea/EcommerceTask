@@ -1,16 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DataAccessLayer
+﻿namespace DataAccessLayer
 {
-    public class Package
+    public class Package : BaseModel
     {
-        [Key]
-        public int PackageId { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public decimal Price { get; set; }
 
-        public virtual ICollection<ProductPackage> ProductPackages { get; set; }
+        public virtual ICollection<ProductPackage> ProductPackages { get; set; } = new List<ProductPackage>();
     }
 }

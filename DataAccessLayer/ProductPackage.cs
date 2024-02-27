@@ -1,16 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DataAccessLayer
+﻿namespace DataAccessLayer
 {
-    public class ProductPackage
+    public class ProductPackage : BaseModel
     {
-        [Key]
-        public int ProductPackageId { get; set; }
 
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
         public Product Product { get; set; }
 
-        public int PackageId { get; set; }
+        public Guid PackageId { get; set; }
         public Package Package { get; set; }
+
     }
 }

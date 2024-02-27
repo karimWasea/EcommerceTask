@@ -1,16 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DataAccessLayer
+﻿namespace DataAccessLayer
 {
-    public class Image
+    public class Image : BaseModel
     {
-        [Key]
-        public int ImageId { get; set; }
 
-        public string Url { get; set; }
+
+        public string Url { get; set; } = string.Empty;
 
         // Foreign key property
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
 
         // Navigation property
         public virtual Product Product { get; set; }

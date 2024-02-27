@@ -1,15 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DataAccessLayer
+﻿namespace DataAccessLayer
 {
-    public class Category
+    public class Category : BaseModel
     {
-        [Key]
-        public int CategoryId { get; set; }
+
 
         public string Name { get; set; } = string.Empty;
         public string Image { get; set; } = string.Empty;
 
-        public virtual ICollection<Subcategory> Subcategories { get; set; }
+        public virtual ICollection<Subcategory> Subcategories { get; set; } = new List<Subcategory>();
     }
 }
