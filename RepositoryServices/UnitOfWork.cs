@@ -10,14 +10,13 @@ namespace RepositoryServices
 
         public readonly ApplicationDbContext _context;
 
-        public UnitOfWork(
-
-
-        )
+        public UnitOfWork( CategoryServess categoryServess , ApplicationDbContext _context )
 
         {
 
+            Icategory= categoryServess;
 
+             this. _context= _context;  
 
 
         }

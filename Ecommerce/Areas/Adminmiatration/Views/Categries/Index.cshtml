@@ -28,14 +28,14 @@
         <tbody id="patientTableBody">
             @foreach (var patient in Model)
             {
-                <tr class="patient">
+                <tr>
                     <td>@patient.Id</td>
                     <td>@patient.Name</td>
                     <td>
-                        <a asp-controller="Tringing" asp-action="Save" asp-route-id="@patient.Id" data-action="edit" class="btn btn-primary">
+                        <a asp-controller="Categries" asp-action="Save" asp-route-id="@patient.Id" data-action="edit" class="btn btn-primary">
                             <i class="fas fa-edit" title="Edit"></i> Edit
                         </a>
-                        <a asp-area="HR" asp-controller="Tringing" asp-action="Delete" asp-route-id="@patient.Id" data-action="delete" class="btn btn-danger">
+                        <a asp-area="HR" asp-controller="Categries" asp-action="Delete" asp-route-id="@patient.Id" data-action="delete" class="btn btn-danger">
                             <i class="fas fa-trash-alt" title="Delete"></i> Delete
                         </a>
                     </td>
@@ -46,6 +46,39 @@
 </div>
 
 <partial name="_PaginationPartial" model="Model" />
+<script>
+
+    // Get the search input element
+    const searchInput = document.getElementById('search-input');
+
+    // Get the patient rows
+    const patientRows = document.querySelectorAll('.patient');
+
+    // Function to update the search results
+    function updateSearchResults() {
+        const searchText = searchInput.value.toLowerCase();
+
+        patientRows.forEach(patientRow => {
+            const patientText = patientRow.textContent.toLowerCase();
+            if (patientText.includes(searchText)) {
+                patientRow.style.display = 'table-row';
+            } else {
+                patientRow.style.display = 'none';
+            }
+        });
+    }
+
+    // Add an event listener to the search input to listen for input changes
+    searchInput.addEventListener('input', function () {
+        updateSearchResults();
+    });
+
+    // Initial call to populate search results
+    updateSearchResults();
+
+
+</script>
 @section Scripts {
-    <script src="~/js/triningindex.js"></script>
+    @*     <script src="~/js/triningindex.js"></script>
+ *@
 }

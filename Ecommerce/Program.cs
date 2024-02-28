@@ -33,10 +33,11 @@ builder.Services.AddRazorPages();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddTransient(typeof(IPaginationHelper<>), typeof(PaginationHelper<>));
+builder.Services.AddScoped(typeof(IPaginationHelper<>), typeof(PaginationHelper<>));
 
-builder.Services.AddTransient<UnitOfWork>();
-builder.Services.AddTransient<Utalites.Imgoperation>();
+builder.Services.AddScoped<UnitOfWork>();
+builder.Services.AddScoped<CategoryServess>();
+builder.Services.AddScoped<Utalites.Imgoperation>();
 
 //builder.Services.AddScoped<TriningEmpoyeeServsess_Api>();
 
@@ -70,20 +71,23 @@ app.MapRazorPages();
 app.UseHttpsRedirection();
  app.UseAuthorization();
 app.UseAuthorization();
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+ 
+
+
+app.MapRazorPages();
+
+ 
 app.MapControllerRoute(
       name: "areas",
       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
     );
 
-//app.MapControllerRoute(
-//       name: "HR",
-//       pattern: "{area=HR}/{controller=Employee}/{action=Index}/{id?}");
+app.MapControllerRoute(
+       name: "HR",
+       pattern: "{area=Admin}/{controller=Employee}/{action=Index}/{id?}");
 
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

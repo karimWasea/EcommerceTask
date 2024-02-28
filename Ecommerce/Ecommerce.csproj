@@ -7,21 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Admin\Data\**" />
-    <Compile Remove="Areas\Admin\Models\**" />
-    <Compile Remove="Areas\Admin\Views\**" />
-    <Content Remove="Areas\Admin\Data\**" />
-    <Content Remove="Areas\Admin\Models\**" />
-    <Content Remove="Areas\Admin\Views\**" />
-    <EmbeddedResource Remove="Areas\Admin\Data\**" />
-    <EmbeddedResource Remove="Areas\Admin\Models\**" />
-    <EmbeddedResource Remove="Areas\Admin\Views\**" />
-    <None Remove="Areas\Admin\Data\**" />
-    <None Remove="Areas\Admin\Models\**" />
-    <None Remove="Areas\Admin\Views\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.27" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.27" />
@@ -37,10 +22,6 @@
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
     <ProjectReference Include="..\IRepositories\IRepositories.csproj" />
     <ProjectReference Include="..\RepositoryServices\RepositoryServices.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Areas\Admin\Views\Categries\Index.cshtml" />
   </ItemGroup>
 
 </Project>

@@ -104,22 +104,22 @@ using PagedList;
 
 using System;
 
+using Utailitze;
+
 using Vmodels;
 
 namespace RepositoryServices
 {
-    public class CategoryServess : Icategory
+    public class CategoryServess  : PaginationHelper<CategoryViewModel> , Icategory
     {
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly IMapper _mapper;
-        private readonly IPaginationHelper<CategoryViewModel> _paginationHelper;
-
-        public CategoryServess(ApplicationDbContext applicationDbContext, IMapper mapper, IPaginationHelper<CategoryViewModel> paginationHelper)
+ 
+        public CategoryServess(ApplicationDbContext applicationDbContext, IMapper mapper)
         {
             _applicationDbContext = applicationDbContext;
             _mapper = mapper;
-            _paginationHelper = paginationHelper;
-        }
+         }
 
         public int Add(CategoryViewModel entity)
         {
@@ -171,18 +171,17 @@ namespace RepositoryServices
             try
             {
                 var queryable = _applicationDbContext.Categories.Where(category =>
-                    (schoolSm.Id == Guid.Empty || category.Id == schoolSm.Id) &&
+                    (schoolSm.Id == Guid.Empty || schoolSm.Id ==null|| category.Id == schoolSm.Id) &&
                     (string.IsNullOrEmpty(schoolSm.Name) || category.Name.Contains(schoolSm.Name))
                 )
                 .Select(category => new CategorySm
                 {
                     Id = category.Id,
-                    Image = category.Image,
-                    Name = category.Name,
+                     Name = category.Name,
                 })
                 .OrderBy(categoryViewModel => categoryViewModel.Id);
 
-                return _paginationHelper.GetPagedData(queryable, pagnumber);
+                return GetPagedData(queryable, pagnumber);
             }
             catch (Exception ex)
             {
