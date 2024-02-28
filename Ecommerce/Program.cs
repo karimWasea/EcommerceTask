@@ -36,6 +36,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddTransient(typeof(IPaginationHelper<>), typeof(PaginationHelper<>));
 
 builder.Services.AddTransient<UnitOfWork>();
+builder.Services.AddTransient<Utalites.Imgoperation>();
 
 //builder.Services.AddScoped<TriningEmpoyeeServsess_Api>();
 

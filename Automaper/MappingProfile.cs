@@ -1,4 +1,10 @@
-﻿using AutoMapper;
+﻿
+
+using AutoMapper;
+
+using DataAccessLayer;
+
+using Vmodels;
 
 namespace AutoMapperServess
 {
@@ -6,7 +12,7 @@ namespace AutoMapperServess
     {
         public MappingProfile()
         {
-            //CreateMap<Data__Access__layer.School, SchoolDto>().ReverseMap();
+            CreateMap<Category, CategoryViewModel>().ReverseMap();
             //CreateMap<Data__Access__layer.School, CreateSchoolDto>().ReverseMap();
 
             //CreateMap<Data__Access__layer.Room, RoomlDto>().ForMember(dest => dest.DepartmentName,

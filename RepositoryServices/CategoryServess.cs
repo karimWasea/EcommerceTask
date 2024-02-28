@@ -4,186 +4,205 @@
 
 //using IRepositories;
 
+//using Microsoft.EntityFrameworkCore;
+
 //using PagedList;
+
+//using Utailitze;
 
 //using Vmodels;
 
 //namespace RepositoryServices
 //{
-//    public class CategoryServess : Icategory
+//    public class CategoryServess  :Icategory
 //    {
 
-//      private   ApplicationDbContext _ApplicationDBcontext;
-//      private  IMapper _mapper;
+//        private ApplicationDbContext _ApplicationDBcontext;
+//        private IMapper _mapper;
+//        private IPaginationHelper<CategoryViewModel>  _paginationHelper;
 //        public CategoryServess(ApplicationDbContext applicationDBcontext
-            
-//            , IMapper mapper)  
+
+//            , IMapper mapper , PaginationHelper<CategoryViewModel> paginationHelper)
 //        {
-//            _ApplicationDBcontext=applicationDBcontext;
+//            _ApplicationDBcontext = applicationDBcontext;
 //            _mapper = mapper;
+//            _paginationHelper = paginationHelper;
 
 //        }
 
-//        public int AddAsync(CategoryViewModel entity)
+//        public int Add(CategoryViewModel entity)
 //        {
-//            throw new NotImplementedException();
+//            var Category = _mapper.Map<Category>(entity);
+//            _ApplicationDBcontext.Add(Category);
+//            return _ApplicationDBcontext.SaveChanges();
 //        }
 
-//        public void DeleteAsync(int id)
+//        public void Delete(int id)
 //        {
-//            throw new NotImplementedException();
+
+//           var deleted=  _ApplicationDBcontext.Categories.Find(id);
+//            _ApplicationDBcontext.Remove(deleted);
+//              _ApplicationDBcontext.SaveChanges();
 //        }
 
-//        public CategoryViewModel GetByIdAsync(int id)
+//        public CategoryViewModel GetById(int id)
 //        {
-//            throw new NotImplementedException();
-//        }
+//            var Category = _ApplicationDBcontext.Categories.Find(id);
+//            var findedcatigory = _mapper.Map<CategoryViewModel>(Category);
+//            return findedcatigory;
+//              }
 
-//        public IPagedList<CategoryViewModel> Seach(CategorySm schoolSm)
+
+
+//        public IPagedList<CategoryViewModel> Search(CategorySm schoolSm)
 //        {
-//            var Qarable =
+//            var queryable = _ApplicationDBcontext.Categories.Where(category =>
+//                (schoolSm.Id == Guid.Empty || category.Id == schoolSm.Id   ) &&
+//                (string.IsNullOrEmpty(schoolSm.Name) || category.Name.Contains(schoolSm.Name))
+//            )
+//            .Select(category => new CategoryViewModel
+//            {
+//                Id = category.Id,
+//                Image = category.Image   , 
+//                 Name = category.Name ,
 
+//             })
+//            .OrderBy(categoryViewModel => categoryViewModel.Id);
 
-//                _ApplicationDBcontext.Categories.Where(
-//                Categories =>
-
-//                (schoolSm.Id = string.Empty|| schoolSm.Id = null || Categories.Id = schoolSm.Id)
-
-
-//                      && (DtoSearch.DepartmentName == null || Departments.Department.DepartmentName.Contains(DtoSearch.DepartmentName))
-
-//                      &&
-//                      (DtoSearch.Building == null || Departments.Building.Contains(DtoSearch.DepartmentName)) &&
-//                      (DtoSearch.RoomNumber == null || Departments.RoomNumber.Contains(DtoSearch.RoomNumber))
-
-
-//                      )
-//                .Select(Departments => new RoomlDto
-//                {
-//                    Id = Departments.Id,
-//                    DepartmentName = Departments.Department.DepartmentName,
-//                    Building = DtoSearch.Building,
-//                    RoomNumber = Departments.RoomNumber,
-//                    Capacity = Departments.Capacity,
-//                    DepartmentId = Departments.DepartmentId
-
-
-
-//                }).OrderBy(g => g.Id);
-//            var IPagedList = GetPagedData(Qarable, DtoSearch.PageNumber);
-
-//            return IPagedList;
+//            return _paginationHelper.GetPagedData(queryable, schoolSm.PagNumber);
 //        }
 
-//        public int UpdateAsync(CategoryViewModel entity)
+//        public int Update(CategoryViewModel entity)
 //        {
-//            throw new NotImplementedException();
+//            var Category = _mapper.Map<Category>(entity);
+//            _ApplicationDBcontext.Update(Category);
+//            return _ApplicationDBcontext.SaveChanges();
 //        }
-
-
-
-//        //public MessageModel Add(CreateRoomlDto entity)
-//        //{
-//        //    var room = _mapper.Map<Room>(entity);
-//        //    _context.Add(room);
-//        //    return ContextSaveChanges(SystemEnums.MessageActionTypes.Add);
-
-//        //}
-
-//        //public RoomlDto GetById(int id)
-//        //{
-
-//        //    return _mapper.Map<RoomlDto>(_context.Rooms.Find(id));
-//        //}
-
-
-
-
-
-
-//        //public IPagedList<RoomlDto> Seach(RoomSM DtoSearch)
-//        //{
-//        //    var Qarable =
-
-
-//        //        _context.Rooms.Include(i => i.Department).Where(
-//        //        Departments =>
-
-//        //        (DtoSearch.Id == 0 || DtoSearch.Id == null || Departments.Id == DtoSearch.Id)
-
-
-//        //              && (DtoSearch.DepartmentName == null || Departments.Department.DepartmentName.Contains(DtoSearch.DepartmentName))
-
-//        //              &&
-//        //              (DtoSearch.Building == null || Departments.Building.Contains(DtoSearch.DepartmentName)) &&
-//        //              (DtoSearch.RoomNumber == null || Departments.RoomNumber.Contains(DtoSearch.RoomNumber))
-
-
-//        //              )
-//        //        .Select(Departments => new RoomlDto
-//        //        {
-//        //            Id = Departments.Id,
-//        //            DepartmentName = Departments.Department.DepartmentName,
-//        //            Building = DtoSearch.Building,
-//        //            RoomNumber = Departments.RoomNumber,
-//        //            Capacity = Departments.Capacity,
-//        //            DepartmentId = Departments.DepartmentId
-
-
-
-//        //        }).OrderBy(g => g.Id);
-//        //    var IPagedList = GetPagedData(Qarable, DtoSearch.PageNumber);
-
-//        //    return IPagedList;
-//        //}
-
-
-
-//        //public MessageModel Update(CreateRoomlDto entity)
-//        //{
-//        //    var CreateRoomlDto = _context.Rooms.Find(entity.Id);
-
-//        //    if (CreateRoomlDto != null)
-//        //    {
-//        //        var CreateRoom = _mapper.Map<Room>(CreateRoomlDto);
-//        //        _context.Update(CreateRoom);
-//        //        return ContextSaveChanges(SystemEnums.MessageActionTypes.Update);
-//        //    }
-//        //    else
-//        //    {
-//        //        var Message = new MessageModel();
-//        //        Message.Id = entity.Id;
-//        //        Message.Message = $" the {entity.RoomNumber}  with  id :{entity.Id} is  {SystemEnums.Message.NotFond}";
-
-//        //        Message.Type = SystemEnums.MessageTypes.NoChanges.ToString();
-//        //        return Message;
-//        //    }
-
-//        //}
-
-
-
-
-//        //public MessageModel Remove(int Id)
-//        //{
-//        //    var RemoveDepartments = _context.Rooms.Find(Id);
-
-//        //    if (RemoveDepartments != null)
-//        //    {
-//        //        var Removedpt = _mapper.Map<Department>(RemoveDepartments);
-//        //        _context.Remove(Removedpt);
-//        //        return ContextSaveChanges(SystemEnums.MessageActionTypes.Delete);
-//        //    }
-//        //    else
-//        //    {
-//        //        var Message = new MessageModel();
-//        //        Message.Id = Id;
-//        //        Message.Message = $"{SystemEnums.Message.NotFond}";
-
-//        //        Message.Type = SystemEnums.MessageTypes.NoChanges.ToString();
-//        //        return Message;
-//        //    }
 //    }
 
 
 //    }
+
+
+
+
+
+
+
+
+
+
+using AutoMapper;
+
+using DataAccessLayer;
+
+using IRepositories;
+
+using Microsoft.EntityFrameworkCore;
+
+using PagedList;
+
+using System;
+
+using Vmodels;
+
+namespace RepositoryServices
+{
+    public class CategoryServess : Icategory
+    {
+        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly IMapper _mapper;
+        private readonly IPaginationHelper<CategoryViewModel> _paginationHelper;
+
+        public CategoryServess(ApplicationDbContext applicationDbContext, IMapper mapper, IPaginationHelper<CategoryViewModel> paginationHelper)
+        {
+            _applicationDbContext = applicationDbContext;
+            _mapper = mapper;
+            _paginationHelper = paginationHelper;
+        }
+
+        public int Add(CategoryViewModel entity)
+        {
+            try
+            {
+                var category = _mapper.Map<Category>(entity);
+                _applicationDbContext.Add(category);
+                return _applicationDbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (log, throw, etc.)
+                throw new Exception("An error occurred while adding the category.", ex);
+            }
+        }
+
+        public void Delete(int id)
+        {
+            try
+            {
+                var deleted = _applicationDbContext.Categories.Find(id);
+                _applicationDbContext.Remove(deleted);
+                _applicationDbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (log, throw, etc.)
+                throw new Exception("An error occurred while deleting the category.", ex);
+            }
+        }
+
+        public CategoryViewModel GetById(int id)
+        {
+            try
+            {
+                var category = _applicationDbContext.Categories.Find(id);
+                return _mapper.Map<CategoryViewModel>(category);
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (log, throw, etc.)
+                throw new Exception("An error occurred while getting the category by ID.", ex);
+            }
+        }
+
+        public IPagedList<CategoryViewModel> Search(CategorySm schoolSm)
+        {
+            try
+            {
+                var queryable = _applicationDbContext.Categories.Where(category =>
+                    (schoolSm.Id == Guid.Empty || category.Id == schoolSm.Id) &&
+                    (string.IsNullOrEmpty(schoolSm.Name) || category.Name.Contains(schoolSm.Name))
+                )
+                .Select(category => new CategoryViewModel
+                {
+                    Id = category.Id,
+                    Image = category.Image,
+                    Name = category.Name,
+                })
+                .OrderBy(categoryViewModel => categoryViewModel.Id);
+
+                return _paginationHelper.GetPagedData(queryable, schoolSm.PagNumber);
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (log, throw, etc.)
+                throw new Exception("An error occurred while searching for categories.", ex);
+            }
+        }
+
+        public int Update(CategoryViewModel entity)
+        {
+            try
+            {
+                var category = _mapper.Map<Category>(entity);
+                _applicationDbContext.Update(category);
+                return _applicationDbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (log, throw, etc.)
+                throw new Exception("An error occurred while updating the category.", ex);
+            }
+        }
+    }
+}

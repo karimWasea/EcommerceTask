@@ -8,7 +8,7 @@ namespace IRepositories
 {
     public interface Icategory : IRepository<CategoryViewModel>
     {
-        IPagedList<CategoryViewModel> Seach(CategorySm schoolSm);
+        IPagedList<CategoryViewModel> Search(CategorySm schoolSm);
 
     }
 }

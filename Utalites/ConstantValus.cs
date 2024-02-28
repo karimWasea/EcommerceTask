@@ -1,4 +1,4 @@
-﻿namespace Utailitzes
+﻿namespace Utalites
 {
     public class SD
     {
