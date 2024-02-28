@@ -165,15 +165,16 @@ namespace RepositoryServices
             }
         }
 
-        public IPagedList<CategoryViewModel> Search(CategorySm schoolSm)
+        public IPagedList<CategorySm> Search(CategorySm schoolSm)
         {
+           var pagnumber =  schoolSm.PagNumber ??1;
             try
             {
                 var queryable = _applicationDbContext.Categories.Where(category =>
                     (schoolSm.Id == Guid.Empty || category.Id == schoolSm.Id) &&
                     (string.IsNullOrEmpty(schoolSm.Name) || category.Name.Contains(schoolSm.Name))
                 )
-                .Select(category => new CategoryViewModel
+                .Select(category => new CategorySm
                 {
                     Id = category.Id,
                     Image = category.Image,
@@ -181,7 +182,7 @@ namespace RepositoryServices
                 })
                 .OrderBy(categoryViewModel => categoryViewModel.Id);
 
-                return _paginationHelper.GetPagedData(queryable, schoolSm.PagNumber);
+                return _paginationHelper.GetPagedData(queryable, pagnumber);
             }
             catch (Exception ex)
             {

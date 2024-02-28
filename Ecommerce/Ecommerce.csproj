@@ -39,4 +39,8 @@
     <ProjectReference Include="..\RepositoryServices\RepositoryServices.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Areas\Admin\Views\Categries\Index.cshtml" />
+  </ItemGroup>
+
 </Project>

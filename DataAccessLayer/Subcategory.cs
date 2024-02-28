@@ -1,16 +1,16 @@
-﻿//using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-//namespace DataAccessLayer
-//{
-//    public class Subcategory : BaseModel
-//    {
+namespace DataAccessLayer
+{
+    public class Subcategory : BaseModel
+    {
 
 
-//        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
-//        [ForeignKey("Category")]
-//        public Guid CategoryId { get; set; }
+        [ForeignKey("Category")]
+        public Guid CategoryId { get; set; }
 
-//        public virtual Category Category { get; set; }
-//    }
-//}
+        public virtual Category Category { get; set; }
+    }
+}
