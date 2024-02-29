@@ -24,4 +24,10 @@
     <ProjectReference Include="..\RepositoryServices\RepositoryServices.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\images\Catagory\" />
+    <Folder Include="wwwroot\assets\images\Products\" />
+    <Folder Include="wwwroot\assets\images\Subcatagory\" />
+  </ItemGroup>
+
 </Project>

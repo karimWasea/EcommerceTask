@@ -1,28 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using IRepositories;
+
+using Microsoft.AspNetCore.Mvc;
 
 using RepositoryServices;
+
+using System.Linq;
+
 using Vmodels;
 
 namespace Ecommerce.Areas.Adminmiatration.Controllers
 {
     [Area("Adminmiatration")]
     //[Authorize(Roles = SD.Role_Admin)]
-    public class CategriesController : Controller
+    public class SubcategriesController : Controller
     {
         private readonly UnitOfWork _unitOfWork;
-
-        public CategriesController(UnitOfWork unitOfWork)
+        private readonly lookupServess _Ilookup;
+        public SubcategriesController(UnitOfWork unitOfWork , lookupServess ilookup)
         {
             _unitOfWork = unitOfWork;
+            _Ilookup = ilookup;  
         }
 
         // GET: Categries
         [HttpGet]
-        public ActionResult Index(CategorySm categorySm ,int? page)
+        public ActionResult Index(SubCategorySm categorySm ,int? page)
         {
              categorySm.PagNumber = page;
 
-            var pagedPatients = _unitOfWork.Icategory.Search(categorySm);
+            var pagedPatients = _unitOfWork.Isubcategory.Search(categorySm);
             return View(pagedPatients);
 
 
@@ -32,21 +38,26 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
 
         public IActionResult Save(Guid id)
         {
+ 
             try
             {
-                if (id != Guid.Empty)
+                if (id != Guid.Empty|| id!=null)
                 {
                     // Retrieve the model with the given id
-                    var model = _unitOfWork.Icategory.GetById(id);
+                    var model = _unitOfWork.Isubcategory.GetById(id);
                     if (model != null)
                     {
+                        model.catagory = _Ilookup.AllParentcatagory();
                         // Return the model to the view for editing
                         return View(model);
                     }
                     else
                     {
-                        // Model with the given id not found
-                        return NotFound();
+                         var SubcategoryViewModel = new SubcategoryViewModel();
+                        SubcategoryViewModel.catagory = _Ilookup.AllParentcatagory();
+
+
+                        return View(SubcategoryViewModel);
                     }
                 }
                 else
@@ -68,23 +79,26 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
         // POST: EmployeeController/Edit/5
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult Save(CategoryViewModel CategoryViewModele)
+        public IActionResult Save(SubcategoryViewModel model)
         {
-            if (!ModelState.IsValid)
+            //if (!ModelState.IsValid)
+            //{
+            //    model.catagory = _Ilookup.AllParentcatagory();
+            //    return View(model);
+            //}
 
-                return View(CategoryViewModele);
-
-
-            if (CategoryViewModele.Id == Guid.Empty || CategoryViewModele.Id == null)
+            //model.CatagoryImgURL= CatagoryImgURL;   
+            if ( model.Id == Guid.Empty || model.Id == null)
             {
-                _unitOfWork.Icategory.Add(CategoryViewModele);
-                TempData["Message"] = $"Successfully added: {CategoryViewModele.Name}!";
+
+                _unitOfWork.Isubcategory.Add(model);
+                TempData["Message"] = $"Successfully added: {model.Name}!";
                 TempData["MessageType"] = "Add";
             }
             else
             {
-                _unitOfWork.Icategory.Update(CategoryViewModele);
-                TempData["Message"] = $"Successfully updated: {CategoryViewModele.Name}!";
+                _unitOfWork.Isubcategory.Update(model);
+                TempData["Message"] = $"Successfully updated: {model.Name}!";
                 TempData["MessageType"] = "updated";
             }
 
@@ -94,7 +108,7 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
 
         public IActionResult Delete( Guid id)
         {
-            _unitOfWork.Icategory.Delete(id);
+            _unitOfWork.Isubcategory.Delete(id);
             return RedirectToAction(nameof(Index));
 
         }

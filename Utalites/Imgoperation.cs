@@ -19,11 +19,13 @@ namespace Utalites
 
 
         IHostingEnvironment _hostEnvironment;
+        private readonly string _imagesPath;
 
         public Imgoperation(
 
            IHostingEnvironment host)
         {
+ 
             _hostEnvironment = host;
         }
 
@@ -68,38 +70,47 @@ namespace Utalites
 
 
 
+        // public string SaveCover(IFormFile cover  , string paths)
+        //{
+        //    var coverName = $"{Guid.NewGuid()}{Path.GetExtension(cover.FileName)}";
 
-        public string SaveImage(IFormFile image)
+        //    var path = Path.Combine(coverName,paths);
+
+        //    using var stream = File.Create(path);
+        //      cover.CopyToAsync(stream);
+
+        //    return coverName;
+        //}
+
+
+
+
+
+        public string SaveCover(IFormFile formFiles, string paths)
         {
-            if (image != null)
+            string filename = null;
+            if (formFiles != null && formFiles.Length > 0)
             {
-                if (IsImageValid(image))
+                string filledirectory = paths; // Use the provided full directory path directly
+                if (!Directory.Exists(filledirectory))
                 {
-                    // Generate a unique file name using a combination of timestamp and GUID
-                    var fileName = $"{DateTime.Now:yyyyMMddHHmmssfff}_{Guid.NewGuid()}{Path.GetExtension(image.FileName)}";
-                    var newImagePath = Path.Combine(_hostEnvironment.WebRootPath, "Images", fileName);
+                    Directory.CreateDirectory(filledirectory); // Create directory if it doesn't exist
+                }
 
-                    try
-                    {
-                        using (var stream = new FileStream(newImagePath, FileMode.Create))
-                        {
-                            image.CopyTo(stream);
-                        }
+                filename = Guid.NewGuid() + "-" + Path.GetFileName(formFiles.FileName); // Generate unique filename
+                string filepath = Path.Combine(filledirectory, filename); // Combine directory path and filename
 
-                        // Return the relative path to the image
-                        return $"/Images/{fileName}";
-                    }
-                    catch (Exception ex)
-                    {
-                        // Handle the exception (e.g., log it or provide user-friendly error message)
-                        // You may want to return an error code or message to the user
-                        return null;
-                    }
+                using (FileStream fs = new FileStream(filepath, FileMode.Create))
+                {
+                    formFiles.CopyTo(fs); // Synchronously copy the file
                 }
             }
-
-            return null;
+            return filename;
         }
+
+
+
+
 
         private bool IsImageValid(IFormFile image)
         {

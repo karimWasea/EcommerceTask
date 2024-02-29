@@ -1,0 +1,102 @@
+﻿@model Vmodels.SubcategoryViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+
+    ViewData["Title"] = "Save";
+}
+<partial name="_AlertMessage" />
+
+<form method="post" asp-area="Adminmiatration" asp-controller="Subcategries" asp-action="Save" id="saveProductForm" enctype="multipart/form-data">
+    <div class="form-group">
+         <input asp-for="Id" class="form-control" hidden />
+      </div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    
+  
+   
+    <div>
+        <input type="file" asp-for="CatagoryImgURL" name="CatagoryImgURL" multiple onchange="loadFile(event)" class="btn btn-primary" />
+        <div id="image-preview-container"></div>
+        <span asp-validation-for="CatagoryImgURL" class="text-danger"></span>
+    </div>
+    <button id="delete-image-btn" class="btn btn-primary" style="display: none;">Delete Image</button>
+    
+    <br />
+
+    <label asp-for="CategoryId">Category</label>
+
+    <div class="form-group">
+        <label asp-for="CategoryId" class="form-label mt-4"></label>
+        <select class="form-select" asp-for="CategoryId" asp-items="Model.catagory"
+                data-placeholder="Select a category" data-minimum-results-for-search="Infinity">
+            <option value=""></option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+  
+ 
+ 
+ 
+
+    <button id="delete-image-btn" style="display: none;" onclick="deleteImage(event)">Delete Image</button>
+    <button type="submit" class="btn btn-primary">Save Product</button>
+
+ 
+
+</form>
+ 
+ <partial name="_ValidationScriptsPartial" />
+<script>
+   
+
+
+    function loadFile(event) {
+        var imagePreviewContainer = document.getElementById('image-preview-container');
+        imagePreviewContainer.innerHTML = '';
+        var files = event.target.files;
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var img = new Image();
+                img.src = e.target.result;
+                img.height = 200;
+                imagePreviewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+            document.getElementById('delete-image-btn').style.display = 'block';
+        }
+    }
+
+    function deleteImage(event) {
+        event.preventDefault();
+        var imagePreviewContainer = document.getElementById('image-preview-container');
+        imagePreviewContainer.removeChild(imagePreviewContainer.firstChild);
+        var files = document.getElementById('clientFiles').files;
+        if (files.length == 0) {
+            document.getElementById('delete-image-btn').style.display = 'none';
+        }
+    }
+
+    document.getElementById('delete-image-btn').addEventListener('click', deleteImage);
+
+
+
+ 
+
+
+
+
+     
+
+</script>

@@ -1,4 +1,6 @@
-﻿namespace IRepositories
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace IRepositories
 {
     public interface Ilookup
     {
@@ -10,6 +12,8 @@
         //IQueryable<SelectListItem> DepartmitAll();
         //List<SelectListItem> GEnder();
         //List<SelectListItem> GetAlltransaction();
+        IQueryable<SelectListItem> AllParentcatagory();
+
 
 
     }

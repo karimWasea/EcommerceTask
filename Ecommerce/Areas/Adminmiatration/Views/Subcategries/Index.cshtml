@@ -1,0 +1,108 @@
+﻿@model PagedList.IPagedList<Vmodels. SubCategorySm>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "All SubCategory";
+}
+
+<h2>@ViewData["Title"]</h2>
+<!-- Add the search input form -->
+ 
+<partial name="_AlertMessage" model="Model" />
+
+
+<a class="btn btn-secondary btn-lg" asp-action="Save">
+    <i class="bi bi-plus-circle-dotted"></i>
+    Add SubCategory
+</a>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning mt-5">
+        <h4 class="alert-heading">No games!</h4>
+        <p class="mb-0">No games were added yet.</p>
+    </div>
+}
+else
+{
+ 
+    <div id="search-results">
+        <table class="table bg-primary table-hover">
+            <thead>
+                <tr>
+                     <th>Name</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>catagory</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="patientTableBody">
+                @foreach (var Subcatagory in Model)
+                {
+                    <tr>
+                        <td>@Subcatagory.Name</td>
+                        <td>@Subcatagory.CatagoryName</td>
+                         <td>
+                                @if (!string.IsNullOrEmpty(Subcatagory.Image))
+                                {
+                                <img src="~/assets/images/Subcatagory/@Subcatagory.Image" class="img-thumbnail" style="width:100px;" />
+                                }
+                                else
+                                {
+                                <!-- Provide a placeholder image or alternative content if the image is not available -->
+                                <span>No Image Available</span>
+                                }
+                        </td>
+                        <td>@Subcatagory.Description</td>
+
+                        <td>
+                            <a asp-controller="Categries" asp-action="Save" asp-route-id="@Subcatagory.Id" data-action="edit" class="btn btn-primary">
+                                <i class="fas fa-edit" title="Edit"></i> Edit
+                            </a>
+                            <a asp-area="HR" asp-controller="Categries" asp-action="Delete" asp-route-id="@Subcatagory.Id" data-action="delete" class="btn btn-danger">
+                                <i class="fas fa-trash-alt" title="Delete"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <partial name="_PaginationPartial" model="Model" />
+
+}
+<script>
+
+    // Get the search input element
+    const searchInput = document.getElementById('search-input');
+
+    // Get the patient rows
+    const patientRows = document.querySelectorAll('.patient');
+
+    // Function to update the search results
+    function updateSearchResults() {
+        const searchText = searchInput.value.toLowerCase();
+
+        patientRows.forEach(patientRow => {
+            const patientText = patientRow.textContent.toLowerCase();
+            if (patientText.includes(searchText)) {
+                patientRow.style.display = 'table-row';
+            } else {
+                patientRow.style.display = 'none';
+            }
+        });
+    }
+
+    // Add an event listener to the search input to listen for input changes
+    searchInput.addEventListener('input', function () {
+        updateSearchResults();
+    });
+
+    // Initial call to populate search results
+    updateSearchResults();
+
+
+</script>  

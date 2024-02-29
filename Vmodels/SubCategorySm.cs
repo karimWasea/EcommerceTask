@@ -12,6 +12,7 @@ namespace Vmodels
         public string Description { get; set; } = string.Empty;
 
         public string Name { get; set; } = string.Empty;
+        public string CatagoryName{ get; set; } = string.Empty;
 
          public Guid CategoryId { get; set; }
         public IFormFile? ImgURL { get; set; }

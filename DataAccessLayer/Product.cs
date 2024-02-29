@@ -16,6 +16,7 @@
         public double Price { get; set; }
 
         public string SKU { get;   set; } = string.Empty;
+        public DateTime  Productiondate { get;   set; } 
 
 
 

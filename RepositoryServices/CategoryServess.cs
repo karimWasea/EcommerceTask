@@ -136,13 +136,24 @@ namespace RepositoryServices
             }
         }
 
-        public void Delete(int id)
+        public  bool Delete(Guid id)
         {
             try
             {
+                var isDeleted = false;
+
                 var deleted = _applicationDbContext.Categories.Find(id);
                 _applicationDbContext.Remove(deleted);
-                _applicationDbContext.SaveChanges();
+              var affectedrows =  _applicationDbContext.SaveChanges();
+
+                if (affectedrows>0)
+                {
+                    isDeleted= true ;
+                    return isDeleted;
+
+                }
+                return isDeleted;
+
             }
             catch (Exception ex)
             {
@@ -151,7 +162,7 @@ namespace RepositoryServices
             }
         }
 
-        public CategoryViewModel GetById(int id)
+        public CategoryViewModel GetById(Guid id)
         {
             try
             {
@@ -190,7 +201,7 @@ namespace RepositoryServices
             }
         }
 
-        public int Update(CategoryViewModel entity)
+        public int? Update(CategoryViewModel entity)
         {
             try
             {

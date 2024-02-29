@@ -10,13 +10,13 @@ namespace RepositoryServices
 
         public readonly ApplicationDbContext _context;
 
-        public UnitOfWork( CategoryServess categoryServess , ApplicationDbContext _context )
+        public UnitOfWork( CategoryServess categoryServess , ApplicationDbContext _context , SubCategoryServess subCategoryServess   )
 
         {
 
             Icategory= categoryServess;
-
-             this. _context= _context;  
+              this. _context= _context;  
+              Isubcategory= subCategoryServess;
 
 
         }
@@ -25,7 +25,8 @@ namespace RepositoryServices
         private bool disposed = false;
 
         public Icategory Icategory { get; }
-
+        public Isubcategory Isubcategory { get; }
+ 
         protected virtual void Dispose(bool disposing)
         {
             if (!disposed)

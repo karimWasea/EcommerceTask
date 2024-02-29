@@ -38,6 +38,7 @@ builder.Services.AddScoped(typeof(IPaginationHelper<>), typeof(PaginationHelper<
 builder.Services.AddScoped<UnitOfWork>();
 builder.Services.AddScoped<CategoryServess>();
 builder.Services.AddScoped<SubCategoryServess>();
+builder.Services.AddTransient<lookupServess>();
 builder.Services.AddScoped<Utalites.Imgoperation>();
 
 //builder.Services.AddScoped<TriningEmpoyeeServsess_Api>();
