@@ -20,17 +20,14 @@
     </div>
 
     <button type="submit" id="savedata" class="btn btn-primary">
-        @if (Model?.Id != null)
-        {
-            @:Update
-        }
-        else
-        {
-            @:Add New
-        }
+      
+ Modify        
     </button>
 </form>
 
+<a asp-area="Adminmiatration" asp-controller="Categries" asp-action="Index" class="btn btn-secondary mt-2">
+    <i class="fas fa-chevron-circle-left"></i> Back to Index
+</a>
 <script>
 
 

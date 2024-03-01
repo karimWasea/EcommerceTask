@@ -8,9 +8,7 @@
 
 <h2>@ViewData["Title"]</h2>
 <!-- Add the search input form -->
-<form id="search-form" method="get" action="@Url.Action("Index")">
-    <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." id="search-input">
-</form>
+ 
 <partial name="_AlertMessage" model="Model" />
 
 <a asp-controller="Categries" asp-action="Save" class="btn btn-primary">
