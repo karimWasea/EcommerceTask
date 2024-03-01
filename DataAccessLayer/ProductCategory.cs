@@ -13,8 +13,8 @@ namespace DataAccessLayer
         [ForeignKey("Category")]
         public Guid CategoryId { get; set; }
         public virtual Category  Category { get; set; }
-        public string Description { get; set; } = string.Empty;
-        public double TotalDiscount { get; set; }
+        public virtual ICollection<Bundels> Bundels  { get; set; } = new List<Bundels>();
+
 
 
     }

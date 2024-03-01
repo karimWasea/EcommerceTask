@@ -13,7 +13,7 @@ namespace DataAccessLayer
         public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Package> Packages { get; set; }
-        public DbSet<ProductPackage> ProductPackages { get; set; }
+        public DbSet<Bundels>  Bundels { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
     }

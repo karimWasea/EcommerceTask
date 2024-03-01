@@ -22,7 +22,6 @@
 
         public virtual ICollection<ProductCategory> ProductCategory { get; set; } = new List<ProductCategory>();
         //public virtual ICollection<Subcategory>  Subcategories { get; set; } = new List<Subcategory>();
-        public virtual ICollection<ProductPackage> ProductPackages { get; set; } = new List<ProductPackage>();
         public virtual ICollection<Image> Images { get; set; } = new List<Image>();
 
     }

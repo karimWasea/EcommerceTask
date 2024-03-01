@@ -41,6 +41,7 @@ builder.Services.AddScoped<SubCategoryServess>();
 builder.Services.AddTransient<lookupServess>();
 builder.Services.AddTransient<ProductyServess>();
 builder.Services.AddScoped<Utalites.Imgoperation>();
+builder.Services.AddScoped<Packageervess>();
 
 //builder.Services.AddScoped<TriningEmpoyeeServsess_Api>();
 
@@ -52,10 +53,7 @@ builder.Services.ConfigureApplicationCookie(option =>
     option.LoginPath = $"/Identity/Account/Login";
 
 });
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-//builder.Services.AddAutoMapper(typeof(MappingProfile));
-builder.Services.AddAutoMapper(typeof(Program));
-var app = builder.Build();
+  var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
