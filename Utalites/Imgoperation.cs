@@ -15,27 +15,28 @@ namespace Utalites
 
 
 
-
+        public const string ImagesPathSubcatagory = "/assets/images/Subcatagory";
+        public const string ImagesPathcatagory = "/assets/images/Subcatagory";
 
 
         IHostingEnvironment _hostEnvironment;
-        private readonly string _imagesPath;
-
         public Imgoperation(
 
            IHostingEnvironment host)
         {
  
+             
             _hostEnvironment = host;
         }
 
 
-        public List<string> Addrengofimges(List<IFormFile> images, string oldImageUrl)
+        public List<string> Addrengofimges(IFormCollection? images, string oldImageUrl)
         {
-            // Delete the old image if exists
+            // Delete the old image if it exists
+            string oldImagePath = oldImageUrl;
+
             if (!string.IsNullOrEmpty(oldImageUrl))
             {
-                string oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, oldImageUrl.TrimStart('/'));
                 if (File.Exists(oldImagePath))
                 {
                     File.Delete(oldImagePath);
@@ -46,13 +47,13 @@ namespace Utalites
             var imagePaths = new List<string>();
 
             // Check if any new images are uploaded
-            if (images != null && images.Count > 0)
+            if (images != null && images.Files.Count > 0)
             {
-                foreach (var file in images)
+                foreach (var file in images.Files)
                 {
                     // Generate a unique file name using GUID to avoid name conflicts
                     var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-                    var newImagePath = Path.Combine(_hostEnvironment.WebRootPath, "images", fileName);
+                    var newImagePath = Path.Combine(oldImagePath, fileName);
 
                     using (var stream = new FileStream(newImagePath, FileMode.Create))
                     {
@@ -60,12 +61,13 @@ namespace Utalites
                     }
 
                     // Add the file path to the list
-                    imagePaths.Add($"/images/{fileName}"); // Store the relative path to the image
+                    imagePaths.Add($"{oldImageUrl}/{fileName}"); // Store the relative path to the image
                 }
             }
 
             return imagePaths;
         }
+
 
 
 
@@ -105,7 +107,7 @@ namespace Utalites
                     formFiles.CopyTo(fs); // Synchronously copy the file
                 }
             }
-            return filename;
+            return $" {paths}/{filename}";
         }
 
 

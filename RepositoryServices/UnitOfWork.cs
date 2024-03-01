@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer;
+using DataAccessLayer.Migrations;
 
 using IRepositories;
 
@@ -10,11 +11,12 @@ namespace RepositoryServices
 
         public readonly ApplicationDbContext _context;
 
-        public UnitOfWork( CategoryServess categoryServess , ApplicationDbContext _context , SubCategoryServess subCategoryServess   )
+        public UnitOfWork( CategoryServess categoryServess , ApplicationDbContext _context , SubCategoryServess subCategoryServess   , ProductyServess productyServess )
 
         {
 
-            Icategory= categoryServess;
+            Product = productyServess;
+            Icategory = categoryServess;
               this. _context= _context;  
               Isubcategory= subCategoryServess;
 
@@ -26,7 +28,8 @@ namespace RepositoryServices
 
         public Icategory Icategory { get; }
         public Isubcategory Isubcategory { get; }
- 
+        public IProduct Product { get; }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!disposed)

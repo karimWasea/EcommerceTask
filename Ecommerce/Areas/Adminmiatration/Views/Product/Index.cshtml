@@ -1,0 +1,111 @@
+﻿@using Vmodels
+@model PagedList.IPagedList<Vmodels. ProductSm>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "All SubCategory";
+}
+
+<h2>@ViewData["Title"]</h2>
+<!-- Add the search input form -->
+
+<partial name="_AlertMessage" model="Model" />
+<form id="search-form" method="get" action="@Url.Action("Index")">
+    <input type="text" name="Filterby" value="@ViewBag.Filterby" placeholder="Search..." id="search-input">
+</form>
+ 
+<a class="btn btn-secondary btn-lg" asp-action="Save">
+    <i class="bi bi-plus-circle-dotted"></i>
+    Add SubCategory
+</a>
+
+ @if (!Model.Any())
+{
+    <div class="alert alert-warning mt-5">
+        <h4 class="alert-heading">No games!</h4>
+        <p class="mb-0">No games were added yet.</p>
+    </div>
+}
+else
+{
+    <div id="search-results">
+
+
+    <div id="search-results">
+        <table class="table bg-primary table-hover">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Description</th>
+                    <th>SKU</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="patientTableBody">
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td>@product.Title</td>
+                        <td>@product.Author</td>
+                        <td>@product.Description</td>
+                        <td>@product.SKU</td>
+                        <td>
+                        </td>
+
+                        <td>
+                            <a asp-controller="Product" asp-action="Save" asp-route-id="@product.Id" data-action="edit" class="btn btn-primary">
+                                <i class="fas fa-edit" title="Edit"></i> Edit
+                            </a>
+                            <a   asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" data-action="delete" class="btn btn-danger">
+                                <i class="fas fa-trash-alt" title="Delete"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <partial name="_PaginationPartial" model="Model" />
+
+}
+ 
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+
+        // Get the search input element
+        const searchInput = document.getElementById('search-input');
+
+        // Get the patient rows
+        const patientRows = document.querySelectorAll('.patient');
+
+        // Function to update the search results
+        function updateSearchResults() {
+            const searchText = searchInput.value.toLowerCase();
+
+            patientRows.forEach(patientRow => {
+                const patientText = patientRow.textContent.toLowerCase();
+                if (patientText.includes(searchText)) {
+                    patientRow.style.display = 'table-row';
+                } else {
+                    patientRow.style.display = 'none';
+                }
+            });
+        }
+
+        // Add an event listener to the search input to listen for input changes
+        searchInput.addEventListener('input', function () {
+            updateSearchResults();
+        });
+
+        // Initial call to populate search results
+        updateSearchResults();
+
+    </script>
+}
+

@@ -39,6 +39,7 @@ builder.Services.AddScoped<UnitOfWork>();
 builder.Services.AddScoped<CategoryServess>();
 builder.Services.AddScoped<SubCategoryServess>();
 builder.Services.AddTransient<lookupServess>();
+builder.Services.AddTransient<ProductyServess>();
 builder.Services.AddScoped<Utalites.Imgoperation>();
 
 //builder.Services.AddScoped<TriningEmpoyeeServsess_Api>();

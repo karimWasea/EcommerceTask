@@ -5,6 +5,7 @@
     {
         Icategory  Icategory { get; }
         Isubcategory   Isubcategory { get; }
+        IProduct    Product { get; }
  
 
     }

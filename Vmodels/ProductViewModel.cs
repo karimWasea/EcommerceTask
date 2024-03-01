@@ -33,8 +33,9 @@ namespace Vmodels
         public String Title { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
-
-
+        public string catagoryname
+        { get; set; } = string.Empty;
+ 
         public string Author { get; set; } = string.Empty;
 
         public string ISBN { get; set; } = string.Empty;
@@ -48,7 +49,9 @@ namespace Vmodels
         public IEnumerable<SelectListItem> catagory { get; set; } = Enumerable.Empty<SelectListItem>();
 
         public IFormCollection? ProductImgs { get; set; }
-        public List<int> Selectedcatagory { get; set; } = default!;
+        public List<Guid> Selectedcatagory { get; set; } = default!;
+        public Guid imgid { get; set; } = default!;
+        public List<string> ImgesUrls { get; set; } = default!;
 
 
     }

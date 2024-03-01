@@ -1,0 +1,143 @@
+﻿@model Vmodels.ProductViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+
+    ViewData["Title"] = "Save";
+}
+<link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.min.css" />
+
+<partial name="_AlertMessage" />
+
+<form method="post" asp-area="Adminmiatration" asp-controller="Product" asp-action="Save" id="saveProductForm" enctype="multipart/form-data">
+    <div class="form-group">
+        @*          <input asp-for="Id" class="form-control" hidden />
+        *@
+    </div>
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Author"></label>
+        <input asp-for="Author" class="form-control" />
+        <span asp-validation-for="Author" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for=" Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="  ISBN"></label>
+        <input asp-for="ISBN" class="form-control" />
+        <span asp-validation-for="ISBN" class="text-danger"></span>
+    </div>
+
+
+    <div>
+        <input type="file" asp-for="ProductImgs" name="ProductImgs" multiple onchange="loadFile(event)" class="btn btn-primary" />
+        <div id="image-preview-container"></div>
+        <span asp-validation-for="ProductImgs" class="text-danger"></span>
+    </div>
+    <button id="delete-image-btn" class="btn btn-primary" style="display: none;">Delete Image</button>
+   <br/>
+
+    <div class="form-group">
+
+        <label asp-for="Selectedcatagory" class="form-label mt-4"></label>
+        <select class="form-select" asp-for="Selectedcatagory" asp-items="Model.catagory"
+                data-placeholder="Select a category" data-minimum-results-for-search="Infinity">
+            <option value=""></option>
+        </select>
+        <span asp-validation-for="Selectedcatagory" class="text-danger"></span>
+    </div>
+
+ 
+
+
+
+    <button id="delete-image-btn" style="display: none;" onclick="deleteImage(event)">Delete Image</button>
+    <button type="submit" id="savedata" class="btn btn-primary">
+        @if (Model?.Id != null)
+        {
+            @:Update
+        }
+        else
+        {
+            @:Add New
+        }
+    </button>
+
+
+
+</form>
+
+<partial name="_ValidationScriptsPartial" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+
+<script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+
+<script>
+        $(document).ready(function () {
+            $('#delete-image-btn').on('click', deleteImage);
+        });
+
+    function loadFile(event) {
+        var imagePreviewContainer = document.getElementById('image-preview-container');
+        imagePreviewContainer.innerHTML = '';
+
+        var files = event.target.files;
+        var maxFiles = 5; // Maximum number of files allowed
+        if (files.length > maxFiles) {
+            alert('You can only upload a maximum of ' + maxFiles + ' images.');
+            // Clear the file input to prevent uploading more than the limit
+            event.target.value = '';
+            return;
+        }
+
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var reader = new FileReader();
+            reader.onload = (function (file) {
+                return function (e) {
+                    var img = new Image();
+                    img.src = e.target.result;
+                    img.height = 200;
+
+                    var previewContainer = document.createElement('div');
+                    previewContainer.classList.add('image-preview');
+
+                    previewContainer.appendChild(img);
+                    imagePreviewContainer.appendChild(previewContainer);
+                };
+            })(file);
+            reader.readAsDataURL(file);
+        }
+
+        document.getElementById('delete-image-btn').style.display = 'block';
+    }
+
+    function deleteImage(event) {
+        event.preventDefault();
+        var imagePreviewContainer = document.getElementById('image-preview-container');
+        imagePreviewContainer.innerHTML = '';
+        document.getElementById('delete-image-btn').style.display = 'none';
+    }
+</script>
+
+ 
+

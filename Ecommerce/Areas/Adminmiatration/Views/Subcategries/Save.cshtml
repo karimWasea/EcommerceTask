@@ -1,10 +1,33 @@
-﻿@model Vmodels.SubcategoryViewModel
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        @model Vmodels.SubcategoryViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = "_Layout";
 
     ViewData["Title"] = "Save";
 }
+
+
+
 <partial name="_AlertMessage" />
 
 <form method="post" asp-area="Adminmiatration" asp-controller="Subcategries" asp-action="Save" id="saveProductForm" enctype="multipart/form-data">
@@ -37,7 +60,7 @@
 
     <div class="form-group">
         <label asp-for="CategoryId" class="form-label mt-4"></label>
-        <select class="form-select" asp-for="CategoryId" asp-items="Model.catagory"
+        <select class="form-select " asp-for="CategoryId" asp-items="Model.catagory"
                 data-placeholder="Select a category" data-minimum-results-for-search="Infinity">
             <option value=""></option>
         </select>
@@ -49,16 +72,31 @@
  
 
     <button id="delete-image-btn" style="display: none;" onclick="deleteImage(event)">Delete Image</button>
-    <button type="submit" class="btn btn-primary">Save Product</button>
-
+    <button type="submit" id="savedata" class="btn btn-primary">
+        @if (Model?.Id != null)
+        {
+            @:Update
+        }
+        else
+        {
+            @:Add New
+        }
+    </button>
  
 
 </form>
  
  <partial name="_ValidationScriptsPartial" />
-<script>
-   
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+        $('select').select2();
+
+        $('#delete-image-btn').on('click', deleteImage);
+    });
 
     function loadFile(event) {
         var imagePreviewContainer = document.getElementById('image-preview-container');
@@ -74,29 +112,19 @@
                 imagePreviewContainer.appendChild(img);
             };
             reader.readAsDataURL(file);
-            document.getElementById('delete-image-btn').style.display = 'block';
         }
+        document.getElementById('delete-image-btn').style.display = 'block';
     }
 
     function deleteImage(event) {
         event.preventDefault();
         var imagePreviewContainer = document.getElementById('image-preview-container');
-        imagePreviewContainer.removeChild(imagePreviewContainer.firstChild);
+        if (imagePreviewContainer.children.length > 0) {
+            imagePreviewContainer.removeChild(imagePreviewContainer.firstChild);
+        }
         var files = document.getElementById('clientFiles').files;
         if (files.length == 0) {
             document.getElementById('delete-image-btn').style.display = 'none';
         }
     }
-
-    document.getElementById('delete-image-btn').addEventListener('click', deleteImage);
-
-
-
- 
-
-
-
-
-     
-
 </script>

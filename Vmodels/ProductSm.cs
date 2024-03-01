@@ -15,6 +15,7 @@ namespace Vmodels
         public String Title { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
+        public string CatagoryName { get; set; } = string.Empty;
 
 
         public string Author { get; set; } = string.Empty;
@@ -30,7 +31,8 @@ namespace Vmodels
         public IEnumerable<SelectListItem> catagory { get; set; } = Enumerable.Empty<SelectListItem>();
 
         public IFormCollection? ProductUrl { get; set; }
-        public List<int> Selectedcatagory { get; set; } = default!;
+        public List<Guid> Selectedcatagory { get; set; } = default!;
+        public  Guid  ProductImgsId { get; set; } = default!;
         public List<string> ProductImgs { get; set; } = default!;
 
     }
