@@ -1,0 +1,69 @@
+﻿@using Vmodels
+@model List<Vmodels.ProductViewModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container">
+    <h2 class="mt-5">@ViewData["Title"]</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning mt-5">
+            <h4 class="alert-heading">No products!</h4>
+            <p class="mb-0">No products were added yet.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h1>Product Details</h1>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.FirstOrDefault().Title</h3>
+                        <p class="card-text">Price before discount: $@Model.FirstOrDefault().Price</p>
+                        <p class="card-text">Price after discount: $@Model.FirstOrDefault().priceafterdiscond</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h1>Categories</h1>
+                <div class="list-group">
+                    @foreach (var product in Model)
+                    {
+                        <a href="#" class="list-group-item list-group-item-action">@product.catagoryname</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="mt-5">
+        <h1>Social Media Share</h1>
+        <div class="btn-group" role="group" aria-label="Social Media Share Buttons">
+            <button type="button" class="btn btn-primary" onclick="shareOnFacebook()">Share on Facebook</button>
+            <button type="button" class="btn btn-info" onclick="shareOnTwitter()">Share on Twitter</button>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        function shareOnFacebook() {
+            var url = encodeURIComponent(window.location.href);
+            var facebookShareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + url;
+            window.open(facebookShareUrl, '_blank');
+        }
+
+        function shareOnTwitter() {
+            var url = encodeURIComponent(window.location.href);
+            var text = encodeURIComponent('Check out this product!');
+            var twitterShareUrl = 'https://twitter.com/intent/tweet?url=' + url + '&text=' + text;
+            window.open(twitterShareUrl, '_blank');
+        }
+    </script>
+}

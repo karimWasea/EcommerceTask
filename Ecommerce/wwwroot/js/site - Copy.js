@@ -1,4 +1,26 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function loadDataTable() {
+    dataTable = $('#tblData').DataTable({
+        "ajax": { url: '/Admin/Product/getall' },
+        "columns": [
+            { data: 'id', "width": "15%" },
+            { data: 'title', "width": "15%" },
+            { data: 'isbn', "width": "10%" },
+            { data: 'price', "width": "10%" },
+            { data: 'author', "width": "10%" },
+            { data: 'categry.name', "width": "10%" },
+            {
+                data: 'id',
+                "render": function (data) {
+                    return `
+                    <div class=" btn-group" role="group">
+                    <a href="/Admin/Product/UpSert?id=${data}" class="btn btn-dark"><i class="bi bi-pencil-square"></i>Edit</a>
 
-// Write your JavaScript code.
+                    <a Onclick="Delete('/Admin/Product/Delete?id=${data}')" class="btn btn-danger "><i class="bi bi-trash-fill"></i>Delete</a>
+                    </div>`
+                },
+                "width": "25%"
+            }
+
+        ]
+    });
+};

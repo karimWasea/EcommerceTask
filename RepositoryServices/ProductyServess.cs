@@ -93,6 +93,43 @@ namespace RepositoryServices
             }
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+        public ProductViewModel GetLastProductInDatabase()
+        {
+            var lastProduct = _applicationDbContext.Products
+                                    .OrderByDescending(p => p.Id) // or CreatedAt, or any other suitable criteria
+                                    .FirstOrDefault();
+
+            if (lastProduct != null)
+            {
+                return new ProductViewModel
+                {
+                    Id = lastProduct.Id,
+                    Title = lastProduct.Title,
+                    Description = lastProduct.Description,
+                    Author = lastProduct.Author,
+                    SKU = lastProduct.SKU,
+                };
+            }
+
+            return null;
+        }
+
+
+
+
+
         public bool Delete(Guid id)
         {
             try
@@ -271,6 +308,36 @@ namespace RepositoryServices
                 throw new Exception("An error occurred while updating the category.", ex);
             }
         }
+
+
+
+
+
+         public List< ProductViewModel> productDetails(Guid id)
+        {
+         var prodct =    _applicationDbContext.ProductCategory
+                .Include(i=>i.Bundels) 
+                .Include(p=>p.Product).Include(p=>p.Category)
+                .Where( p=>p.ProductId==id).Select(p => new ProductViewModel
+         {
+
+
+ Title=p.Product.Title,
+                    catagoryname = p.Category.Name,
+                     Price=p.Product.Price,
+                    priceafterdiscond=  p.Bundels.Select(p=>p.ProductPriceAfterdisonted).FirstOrDefault(),
+                     
+
+
+
+
+
+                }).ToList();
+             return prodct;
+
+        }
+
+
 
 
 

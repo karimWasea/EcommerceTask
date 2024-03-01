@@ -16,10 +16,10 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly lookupServess _Ilookup;
-        public ProductController(UnitOfWork unitOfWork , lookupServess ilookup)
+        public ProductController(UnitOfWork unitOfWork, lookupServess ilookup)
         {
             _unitOfWork = unitOfWork;
-            _Ilookup = ilookup;  
+            _Ilookup = ilookup;
         }
 
         // GET: Categries
@@ -27,10 +27,18 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
         public ActionResult Index(string Filterby, int? page)
         {
             var categorySm = new ProductSm();
-            categorySm.Filterby = Filterby; 
-             categorySm.PagNumber = page;
+            categorySm.Filterby = Filterby;
+            categorySm.PagNumber = page;
 
             var pagedPatients = _unitOfWork.Product.Search(categorySm);
+            return View(pagedPatients);
+
+
+        }
+        public ActionResult productDetails(Guid productid)
+        {
+
+            var pagedPatients = _unitOfWork.Product.productDetails(productid);
             return View(pagedPatients);
 
 
@@ -40,10 +48,10 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
 
         public IActionResult Save(Guid id)
         {
- 
+
             try
             {
-                if (id != Guid.Empty|| id!=null)
+                if (id != Guid.Empty || id != null)
                 {
                     // Retrieve the model with the given id
                     var model = _unitOfWork.Product.GetById(id);
@@ -55,7 +63,7 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
                     }
                     else
                     {
-                         var SubcategoryViewModel = new ProductViewModel();
+                        var SubcategoryViewModel = new ProductViewModel();
                         SubcategoryViewModel.catagory = _Ilookup.AllParentcatagory();
 
 
@@ -83,14 +91,14 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
         //[ValidateAntiForgeryToken]
         public IActionResult Save(ProductViewModel model)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    model.catagory = _Ilookup.AllParentcatagory();
-            //    return View(model);
-            //}
+            if (!ModelState.IsValid)
+            {
+                model.catagory = _Ilookup.AllParentcatagory();
+                return View(model);
+            }
 
             //model.CatagoryImgURL= CatagoryImgURL;   
-            if ( model.Id == Guid.Empty || model.Id == null)
+            if (model.Id == Guid.Empty || model.Id == null)
             {
 
                 _unitOfWork.Product.Add(model);
@@ -108,11 +116,24 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
         }
 
 
-        public IActionResult Delete( Guid id)
+        public IActionResult Delete(Guid id)
         {
             _unitOfWork.Product.Delete(id);
             return RedirectToAction(nameof(Index));
 
         }
+
+
+
+
+        #region API Call
+
+        [HttpGet]
+        public IActionResult GetLastProductInDatabase()
+        {
+            var ObjProduct = _unitOfWork.Product.GetLastProductInDatabase();
+            return Json(new { data = ObjProduct });
+        }
+        #endregion
     }
 }

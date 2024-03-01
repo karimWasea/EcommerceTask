@@ -4,12 +4,14 @@
 
 @{
     Layout = "_Layout";
-    ViewData["Title"] = "All SubCategory";
+    ViewData["Title"] = "All Product";
 }
 
 <h2>@ViewData["Title"]</h2>
 <!-- Add the search input form -->
 
+  
+       
 <partial name="_AlertMessage" model="Model" />
 <form id="search-form" method="get" action="@Url.Action("Index")">
     <input type="text" name="Filterby" value="@ViewBag.Filterby" placeholder="Search..." id="search-input">
@@ -63,6 +65,10 @@ else
                                 <a asp-area="Adminmiatration" asp-controller="Bundels" asp-action="Save" asp-route-ProductId="@product.Id"   class="btn btn-info">
                                     <i class="fas fa-trash-alt" title="Edit"></i>  Add product to new bundels
                             </a>
+
+                                <a asp-area="Adminmiatration" asp-controller="Product" asp-action="productDetails" asp-route-productid="@product.Id" class="btn btn-info">
+                                    <i class="fas fa-trash-alt" title="Edit"></i>  productDetails
+                            </a>
                                 
                         </td>
                     </tr>
@@ -112,3 +118,10 @@ else
     </script>
 }
 
+
+
+
+
+
+
+ 
