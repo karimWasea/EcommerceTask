@@ -4,7 +4,7 @@
 
 @{
     Layout = "_Layout";
-    ViewData["Title"] = "All SubCategory";
+    ViewData["Title"] = "All Bundels ";
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -39,22 +39,22 @@ else
                         <th>ProductName</th>
                         <th>productDiscount</th>
                         <th>Description</th>
-                    <th>Action</th>
+                        <th>Action</th>
                 </tr>
             </thead>
             <tbody id="patientTableBody">
                 @foreach (var product in Model)
                 {
                     <tr>
-                            <td>@product.PackgeName</td>
+                         <td>@product.PackgeName</td>
                         <td>@product.CatagoryName</td>
                         <td>@product.ProductName</td>
-                        <td>@product.productDiscount</td>
-                        <td>@product.Description</td>
-                        <td>
+                            <td>@product.productDiscount %</td>
+                        <td>@product.Description </td>
+                       
  
                         <td>
-                                <a asp-controller="Bundels" asp-action="Save" asp-route-id="@product.Id" data-action="edit" class="btn btn-primary">
+                                <a asp-controller="Bundels" asp-action="Save" asp-route-ProductId="@product.ProductId" asp-route-id="@product.Id" data-action="edit" class="btn btn-primary">
                                 <i class="fas fa-edit" title="Edit"></i> Edit
                             </a>
                                 <a asp-controller="Bundels" asp-action="Delete" asp-route-id="@product.Id" data-action="delete" class="btn btn-danger">

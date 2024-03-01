@@ -3,7 +3,7 @@
 
 @{
     Layout = "_Layout";
-    ViewData["Title"] = "All Tringing";
+    ViewData["Title"] = "All Packages";
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -39,8 +39,8 @@
                             <i class="fas fa-trash-alt" title="Delete"></i> Delete
                         </a>
 
-                        <a asp-area="Adminmiatration" asp-controller="Package" asp-action="packageid" asp-route-id="@patient.Id" data-action="delete" class="btn btn-danger">
-                            <i class="fas fa-trash-alt" title="Delete"></i> Delete
+                        <a asp-area="Adminmiatration" asp-controller="Package" asp-action="PackageDetails" asp-route-packageid="@patient.Id" data-action="delete" class="btn btn-primary">
+                            <i class="fas fa-trash-alt" title="Delete"></i> PackageDetails
                         </a>
                     </td>
                 </tr>

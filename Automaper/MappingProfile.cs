@@ -15,7 +15,7 @@ namespace AutoMapperServess
             CreateMap<Category, CategoryViewModel>().ReverseMap();
             CreateMap<Subcategory, SubcategoryViewModel>().ReverseMap();
             CreateMap<Product, ProductViewModel>().ReverseMap();
-            CreateMap<Package, PackageViewModel>().ReverseMap();
+            CreateMap<Packageviewmodel, PackageViewModel>().ReverseMap();
             CreateMap<Bundels, BundelsViewModel>().ReverseMap();
             //CreateMap<Data__Access__layer.School, CreateSchoolDto>().ReverseMap();
 

@@ -81,11 +81,11 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
         //[ValidateAntiForgeryToken]
         public IActionResult Save(SubcategoryViewModel model)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    model.catagory = _Ilookup.AllParentcatagory();
-            //    return View(model);
-            //}
+            if (!ModelState.IsValid)
+            {
+                model.catagory = _Ilookup.AllParentcatagory();
+                return View(model);
+            }
 
             //model.CatagoryImgURL= CatagoryImgURL;   
             if ( model.Id == Guid.Empty || model.Id == null)

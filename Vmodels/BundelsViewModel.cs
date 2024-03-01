@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
+using System.ComponentModel.DataAnnotations;
+
 namespace Vmodels
 {
     public class BundelsViewModel :BaseSm
     {
-
+        [Required(ErrorMessage = "  is required.")]
         public Guid PackageId { get; set; }
-         public string Description { get; set; } = string.Empty;
+        [Required(ErrorMessage = "  is required.")]
+
+        public string Description { get; set; }
+        [Required(ErrorMessage = "  is required.")]
 
         public double? productDiscount { get; set; }
         public double? ProductPriceAfterdisonted { get; set; }
@@ -17,11 +22,16 @@ namespace Vmodels
         public string ProductName { get; set; } = string.Empty;
          public string PackgeName { get; set; } = string.Empty;
          public string CatagoryName  { get; set; } = string.Empty;
- 
+
         public double? ProductPriceBefordisonted { get; set; }
+
          public Guid  CategoryId { get; set; }
-        public  List< Guid> SelecttedCategoryId { get; set; }
-        public  List< string> MultiCatagoryNameforOneproduct { get; set; }
+        [Required(ErrorMessage = "  is required.")]
+
+        public List< Guid> SelecttedCategoryId { get; set; }
+        public  List< string> MultiCatagoryNameforOneproduct { get; set; } = new List< string>();
+        [Required(ErrorMessage = "  is required.")]
+
         public Guid ProductId { get; set; }
     }
 }

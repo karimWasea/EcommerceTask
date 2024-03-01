@@ -1,6 +1,9 @@
-﻿using IRepositories;
+﻿using DataAccessLayer;
+
+using IRepositories;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 using RepositoryServices;
 
@@ -48,7 +51,7 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
                     var model = _unitOfWork.Bundels.GetById(id);
 
                     model.ProductId = ProductId;
-                    model.ProductName = _unitOfWork.Bundels?.GetProductdataById(ProductId)?.Select(i => i.CatagoryName)?.FirstOrDefault();
+                    model.ProductName = _unitOfWork.Bundels?.GetProductdataById(ProductId)?.Select(i => i.ProductName)?.FirstOrDefault();
                     model.MultiCatagoryNameforOneproduct = _unitOfWork.Bundels.GetProductdataById(ProductId).Select(i => i.CatagoryName).ToList();
                     model.catagory = _Ilookup.AllParentcatagory();
                     model.Pakgesids = _Ilookup.AllPakages();
@@ -59,10 +62,10 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
                 else
                 {
                     var Addnew = new BundelsViewModel();
-                    Addnew.catagory = _Ilookup.AllParentcatagory();
                     Addnew.ProductId = ProductId;
-                    Addnew.ProductName = _unitOfWork.Bundels?.GetProductdataById(ProductId)?.Select(i => i.CatagoryName)?.FirstOrDefault();
+                    Addnew.ProductName = _unitOfWork.Bundels?.GetProductdataById(ProductId)?.Select(i => i.ProductName)?.FirstOrDefault();
                     Addnew.MultiCatagoryNameforOneproduct = _unitOfWork.Bundels.GetProductdataById(ProductId).Select(i => i.CatagoryName).ToList();
+                    Addnew.catagory = _Ilookup.AllParentcatagory();
                     Addnew.Pakgesids = _Ilookup.AllPakages();
 
                     return View(Addnew);
@@ -84,16 +87,22 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
         //[ValidateAntiForgeryToken]
         public IActionResult Save(BundelsViewModel model)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    model.catagory = _Ilookup.AllParentcatagory();
-            //    return View(model);
-            //}
+
+
+            if (!ModelState.IsValid)
+            {
+
+                model.ProductId = model.ProductId;
+                model.ProductName = _unitOfWork.Bundels?.GetProductdataById(model.ProductId)?.Select(i => i.ProductName)?.FirstOrDefault();
+                model.MultiCatagoryNameforOneproduct = _unitOfWork.Bundels.GetProductdataById(model.ProductId).Select(i => i.CatagoryName).ToList();
+                model.catagory = _Ilookup.AllParentcatagory();
+                model.Pakgesids = _Ilookup.AllPakages();
+                return View(model);
+            }
 
             //model.CatagoryImgURL= CatagoryImgURL;   
             if ( model.Id == Guid.Empty || model.Id == null)
             {
-
                 _unitOfWork.Bundels.Add(model);
                 TempData["Message"] = $"Successfully added:  !";
                 TempData["MessageType"] = "Add";

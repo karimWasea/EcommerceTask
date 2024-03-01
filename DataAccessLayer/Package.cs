@@ -1,6 +1,6 @@
 ﻿namespace DataAccessLayer
 {
-    public class Package : BaseModel
+    public class Packageviewmodel : BaseModel
     {
 
         public string Name { get; set; } = string.Empty;

@@ -38,7 +38,7 @@ namespace RepositoryServices
         {
             try
             {
-                var Package = _mapper.Map<Package>(entity);
+                var Package = _mapper.Map<Packageviewmodel>(entity);
                 _applicationDbContext.Add(Package);
                 return _applicationDbContext.SaveChanges();
             }
@@ -120,11 +120,12 @@ namespace RepositoryServices
         {
             try
             {
-                var Package = _mapper.Map<Package>(entity);
+                var Package = _mapper.Map<Packageviewmodel>(entity);
                 _applicationDbContext.Update(Package);
                 return _applicationDbContext.SaveChanges();
             }
             catch (Exception ex)
+            
             {
                 // Handle exception (log, throw, etc.)
                 throw new Exception("An error occurred while updating the Package.", ex);

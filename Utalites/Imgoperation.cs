@@ -61,7 +61,7 @@ namespace Utalites
                     }
 
                     // Add the file path to the list
-                    imagePaths.Add($"{oldImageUrl}/{fileName}"); // Store the relative path to the image
+                    imagePaths.Add( fileName); // Store the relative path to the image
                 }
             }
 
@@ -107,7 +107,7 @@ namespace Utalites
                     formFiles.CopyTo(fs); // Synchronously copy the file
                 }
             }
-            return $" {paths}/{filename}";
+            return filename;
         }
 
 

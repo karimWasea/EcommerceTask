@@ -48,16 +48,11 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
                 {
                     // Retrieve the model with the given id
                     var model = _unitOfWork.Package.GetById(id);
-                    if (model != null)
-                    {
+                   
                         // Return the model to the view for editing
                         return View(model);
-                    }
-                    else
-                    {
-                        // Model with the given id not found
-                        return NotFound();
-                    }
+                    
+                 
                 }
                 else
                 {

@@ -172,7 +172,9 @@ namespace RepositoryServices
             var pagnumber = ProductSm.PagNumber ?? 1;
             try
             {
-                var queryable = _applicationDbContext.Products.Include(i => i.Images)
+                var queryable = _applicationDbContext.Products
+
+                    .Include(i => i.Images)
      .Include(i => i.ProductCategory)
          .ThenInclude(p => p.Category)
      .Where(category =>
@@ -187,8 +189,7 @@ namespace RepositoryServices
          Description = category.Description,
          Author = category.Author,
          SKU = category.SKU,
-         ProductImgsId = category.Images.FirstOrDefault().Id ,
-         //CatagoryName = category.ProductCategory.FirstOrDefault().Category.Name ??"",
+      
      })
      .OrderBy(categoryViewModel => categoryViewModel.Id);
 

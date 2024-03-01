@@ -6,7 +6,7 @@
       
 
         public Guid PackageId { get; set; }
-        public Package Package { get; set; }
+        public Packageviewmodel Package { get; set; }
         public string Description { get; set; } = string.Empty;
 
         public double ? productDiscount { get; set; }
