@@ -53,6 +53,13 @@ namespace RepositoryServices
                 Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name })
                 .OrderBy(c => c.Text).AsNoTracking();
             return applicationuser;
+        }  
+        public IQueryable<SelectListItem> AllPakages()
+        {
+            IQueryable<SelectListItem>? applicationuser = _applicationDBcontext.Packages.
+                Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name })
+                .OrderBy(c => c.Text).AsNoTracking();
+            return applicationuser;
         }
      
 

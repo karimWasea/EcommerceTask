@@ -13,6 +13,8 @@ namespace IRepositories
         //List<SelectListItem> GEnder();
         //List<SelectListItem> GetAlltransaction();
         IQueryable<SelectListItem> AllParentcatagory();
+        IQueryable<SelectListItem> AllPakages();
+
 
 
 

@@ -35,7 +35,7 @@ namespace RepositoryServices
             _mapper = mapper;
          }
 
-        public int Add(CategoryViewModel entity)
+        public int? Add(CategoryViewModel entity)
         {
             try
             {

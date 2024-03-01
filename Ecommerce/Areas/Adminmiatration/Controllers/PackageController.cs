@@ -29,6 +29,14 @@ namespace Ecommerce.Areas.Adminmiatration.Controllers
 
 
         }
+           public ActionResult PackageDetails( Guid packageid)
+        {
+ 
+            var pagedPatients = _unitOfWork.Bundels.Getpackgedetails(packageid);
+            return View(pagedPatients);
+
+
+        }
 
 
 

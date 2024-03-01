@@ -188,7 +188,7 @@ namespace RepositoryServices
          Author = category.Author,
          SKU = category.SKU,
          ProductImgsId = category.Images.FirstOrDefault().Id ,
-         CatagoryName = category.ProductCategory.FirstOrDefault().Category.Name ??"",
+         //CatagoryName = category.ProductCategory.FirstOrDefault().Category.Name ??"",
      })
      .OrderBy(categoryViewModel => categoryViewModel.Id);
 

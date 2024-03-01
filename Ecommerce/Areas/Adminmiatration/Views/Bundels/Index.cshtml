@@ -1,5 +1,5 @@
 ﻿@using Vmodels
-@model PagedList.IPagedList<Vmodels. ProductSm>
+@model PagedList.IPagedList<Vmodels. BundelsViewModel>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -9,16 +9,14 @@
 
 <h2>@ViewData["Title"]</h2>
 <!-- Add the search input form -->
-
+<br />
+<br />
 <partial name="_AlertMessage" model="Model" />
 <form id="search-form" method="get" action="@Url.Action("Index")">
     <input type="text" name="Filterby" value="@ViewBag.Filterby" placeholder="Search..." id="search-input">
 </form>
  
-<a class="btn btn-secondary btn-lg" asp-action="Save">
-    <i class="bi bi-plus-circle-dotted"></i>
-    Add SubCategory
-</a>
+
 
  @if (!Model.Any())
 {
@@ -36,10 +34,11 @@ else
         <table class="table bg-primary table-hover">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Description</th>
-                    <th>SKU</th>
+                        <th>PackgeName</th>
+                        <th>CatagoryName</th>
+                        <th>ProductName</th>
+                        <th>productDiscount</th>
+                        <th>Description</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -47,23 +46,20 @@ else
                 @foreach (var product in Model)
                 {
                     <tr>
-                        <td>@product.Title</td>
-                        <td>@product.Author</td>
+                            <td>@product.PackgeName</td>
+                        <td>@product.CatagoryName</td>
+                        <td>@product.ProductName</td>
+                        <td>@product.productDiscount</td>
                         <td>@product.Description</td>
-                        <td>@product.SKU</td>
                         <td>
  
                         <td>
-                            <a asp-controller="Product" asp-action="Save" asp-route-id="@product.Id" data-action="edit" class="btn btn-primary">
+                                <a asp-controller="Bundels" asp-action="Save" asp-route-id="@product.Id" data-action="edit" class="btn btn-primary">
                                 <i class="fas fa-edit" title="Edit"></i> Edit
                             </a>
-                            <a   asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" data-action="delete" class="btn btn-danger">
+                                <a asp-controller="Bundels" asp-action="Delete" asp-route-id="@product.Id" data-action="delete" class="btn btn-danger">
                                 <i class="fas fa-trash-alt" title="Delete"></i> Delete
                             </a>
-                                <a asp-area="Adminmiatration" asp-controller="Bundels" asp-action="Save" asp-route-ProductId="@product.Id"   class="btn btn-info">
-                                    <i class="fas fa-trash-alt" title="Edit"></i>  Add product to new bundels
-                            </a>
-                                
                         </td>
                     </tr>
                 }

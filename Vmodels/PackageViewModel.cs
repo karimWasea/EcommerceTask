@@ -1,6 +1,6 @@
 ﻿namespace Vmodels
 {
-    public class PackageViewModel : BaseSm { 
+    public class PackageViewModel : BaseSm {
 
         public string Name { get; set; } = string.Empty;
 

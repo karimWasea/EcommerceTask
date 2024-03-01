@@ -176,7 +176,7 @@ namespace RepositoryServices
             try
             {
                 var queryable = _applicationDbContext.Bundels.Include(i=>i.ProductCategory).
-                    ThenInclude(p=>p.Product).ThenInclude(i=>i.Price).Include(i=>i.ProductCategory)
+                    ThenInclude(p=>p.Product).Include(i=>i.ProductCategory)
                     .ThenInclude(i=>i.Category).Where(category =>
                     (schoolSm.Id == Guid.Empty || schoolSm.Id ==null|| category.Id == schoolSm.Id) 
                  )
@@ -194,7 +194,7 @@ namespace RepositoryServices
       ProductName = category.ProductCategory.Product.Title,
        CategoryId = category.ProductCategory.CategoryId
         , 
-       PackensmeName = category.Package.Name,
+        PackgeName = category.Package.Name,
 
 
 
@@ -215,6 +215,76 @@ namespace RepositoryServices
 
 
 
+
+
+        public List<BundelsViewModel> Getpackgedetails( Guid  packgeid  )
+        {
+             try
+            {
+                var queryable = _applicationDbContext.Bundels.Include(i => i.ProductCategory).
+                    ThenInclude(p => p.Product).ThenInclude(i => i.Price).Include(i => i.ProductCategory)
+                    .ThenInclude(i => i.Category).Where(category =>
+                    ( category.PackageId == packgeid)
+                 )
+                .Select(category => new BundelsViewModel
+                {
+                    Id = category.Id,
+                    PackageId = category.PackageId,
+                    Description = category.Description,
+                    ProductCategoryId = category.ProductCategoryId
+      ,
+                    productDiscount = category.productDiscount
+         ,
+                    CatagoryName = category.ProductCategory.Category.Name,
+                    ProductId = category.ProductCategory.ProductId,
+                    ProductName = category.ProductCategory.Product.Title,
+                    CategoryId = category.ProductCategory.CategoryId
+        ,
+                    PackgeName = category.Package.Name,
+
+
+
+
+
+                })
+                .OrderBy(categoryViewModel => categoryViewModel.Id).ToList();
+
+                return queryable;
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (log, throw, etc.)
+                throw new Exception("An error occurred while searching for categories.", ex);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public List<BundelsViewModel> GetProductdataById(Guid ProductId)
+        {
+            var productCategories = _applicationDbContext.ProductCategory
+                .Include(pc => pc.Product)
+                .Include(pc => pc.Category)
+                .Where(pc => pc.ProductId == ProductId)
+                .Select(pc => new BundelsViewModel
+                {
+                    ProductName = pc.Product.Title,
+                    CatagoryName = pc.Category.Name
+                })
+                .ToList();
+
+            return productCategories;
+        }
 
 
 
