@@ -42,6 +42,7 @@ builder.Services.AddTransient<lookupServess>();
 builder.Services.AddTransient<ProductyServess>();
 builder.Services.AddScoped<Utalites.Imgoperation>();
 builder.Services.AddScoped<Packageervess>();
+builder.Services.AddScoped<BundelsServess>();
 
 //builder.Services.AddScoped<TriningEmpoyeeServsess_Api>();
 

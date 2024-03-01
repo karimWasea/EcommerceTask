@@ -1,4 +1,5 @@
-﻿ 
+﻿
+
 
 
 
@@ -40,7 +41,7 @@ namespace RepositoryServices
             _imagesPath = $"{_webHostEnvironment.WebRootPath}{Utalites.FileSettings.ImagesPathSubcatagory}";
         }
 
-        public int Add(SubcategoryViewModel entity)
+        public int? Add(SubcategoryViewModel entity)
         {
             try
             {

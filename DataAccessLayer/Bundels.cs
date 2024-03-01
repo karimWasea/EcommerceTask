@@ -13,7 +13,7 @@
         public double? ProductPriceAfterdisonted { get; set; }
         public Guid ProductCategoryId { get; set; }
 
-        public ProductCategory  Category { get; set; }
+        public ProductCategory ProductCategory { get; set; }
 
 
 

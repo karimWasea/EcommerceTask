@@ -11,7 +11,7 @@ namespace RepositoryServices
 
         public readonly ApplicationDbContext _context;
 
-        public UnitOfWork( CategoryServess categoryServess , ApplicationDbContext _context , SubCategoryServess subCategoryServess , ProductyServess productServess , Packageervess Packageervess)
+        public UnitOfWork(BundelsServess bundelsServess , CategoryServess categoryServess , ApplicationDbContext _context , SubCategoryServess subCategoryServess , ProductyServess productServess , Packageervess Packageervess)
 
         {
 
@@ -20,6 +20,8 @@ namespace RepositoryServices
               this. _context= _context;  
               Isubcategory= subCategoryServess;
             Package = Packageervess;
+               Bundels = bundelsServess;
+                 
 
 
         }
@@ -31,6 +33,7 @@ namespace RepositoryServices
         public Isubcategory Isubcategory { get; }
         public IProduct Product { get; }
         public IPackage Package { get; }
+        public IBundels Bundels { get; }
 
         protected virtual void Dispose(bool disposing)
         {

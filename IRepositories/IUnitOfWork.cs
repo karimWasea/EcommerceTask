@@ -6,7 +6,8 @@
         Icategory  Icategory { get; }
         Isubcategory   Isubcategory { get; }
         IProduct    Product { get; }
-        public IPackage Package { get; }
+          IPackage Package { get; }
+        IBundels   Bundels { get; }
 
 
     }

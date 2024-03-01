@@ -34,7 +34,7 @@ namespace RepositoryServices
             _mapper = mapper;
          }
 
-        public int Add(PackageViewModel entity)
+        public int ?Add(PackageViewModel entity)
         {
             try
             {

@@ -41,7 +41,7 @@ namespace RepositoryServices
             _imagesPath = $"{_webHostEnvironment.WebRootPath}{Utalites.FileSettings.ImagesPathProduct}";
         }
 
-        public int Add(ProductViewModel entity)
+        public int  ?Add(ProductViewModel entity)
         {
             try
             {
