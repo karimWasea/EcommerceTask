@@ -12,17 +12,15 @@
 <br />
 <br />
 <partial name="_AlertMessage" model="Model" />
-<form id="search-form" method="get" action="@Url.Action("Index")">
-    <input type="text" name="Filterby" value="@ViewBag.Filterby" placeholder="Search..." id="search-input">
-</form>
+
  
 
 
- @if (!Model.Any())
+@if (!Model.Any())
 {
     <div class="alert alert-warning mt-5">
-        <h4 class="alert-heading">No games!</h4>
-        <p class="mb-0">No games were added yet.</p>
+        <h4 class="alert-heading">No data!</h4>
+        <p class="mb-0">No data were added yet.</p>
     </div>
 }
 else
